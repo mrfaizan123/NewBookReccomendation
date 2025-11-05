@@ -2,8 +2,9 @@ import axios from 'axios';
 
 // ✅ Change baseURL to your deployed backend
 const API = axios.create({
-  baseURL: 'https://newbookreccomendation-3.onrender.com/api'
+  baseURL: 'https://newbookreccomendation-2.onrender.com/api'
 });
+
 
 export const signup = (data) => API.post('/auth/signup', data);
 export const login = (data) => API.post('/auth/login', data);
