@@ -304,8 +304,11 @@ const Home = () => {
     useEffect(() => {
         getTopBooks()
             .then(res => {
-                setBooks(res.data);
-                setFilteredBooks(res.data);
+                // setBooks(res.data);
+                // setFilteredBooks(res.data);
+                        setBooks(res.data.data);  
+setFilteredBooks(res.data.data);
+
                 setLoading(false);
             })
             .catch(err => {
