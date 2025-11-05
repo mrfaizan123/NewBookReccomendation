@@ -1,12 +1,53 @@
+// const axios = require('axios');
+
+// // Fetch top books from Flask
+// exports.getTopBooks = async (req, res) => {
+//   try {
+//     const response = await axios.get('http://127.0.0.1:5001/');
+//     res.status(200).json(response.data);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).json({ error: 'Failed to fetch top books' });
+//   }
+// };
+
+// // Fetch recommendations from Flask
+// exports.getRecommendations = async (req, res) => {
+//   const { user_input } = req.body;
+//   try {
+//     const response = await axios.post('http://127.0.0.1:5001/recommend_books', { user_input });
+//     res.status(200).json(response.data);
+//   } catch (err) {
+//     console.error(err.message);
+//     if (err.response && err.response.data.error) {
+//       res.status(404).json({ error: err.response.data.error });
+//     } else {
+//       res.status(500).json({ error: 'Failed to fetch recommendations' });
+//     }
+//   }
+// };
+
+
+
+
+
+
+
+
+
+
+
 const axios = require('axios');
+
+const PYTHON_API = 'https://newbookreccomendation-2.onrender.com';
 
 // Fetch top books from Flask
 exports.getTopBooks = async (req, res) => {
   try {
-    const response = await axios.get('http://127.0.0.1:5001/');
+    const response = await axios.get(`${PYTHON_API}/`);
     res.status(200).json(response.data);
   } catch (err) {
-    console.error(err.message);
+    console.error("❌ Top Books Fetch Error:", err.message);
     res.status(500).json({ error: 'Failed to fetch top books' });
   }
 };
@@ -15,11 +56,12 @@ exports.getTopBooks = async (req, res) => {
 exports.getRecommendations = async (req, res) => {
   const { user_input } = req.body;
   try {
-    const response = await axios.post('http://127.0.0.1:5001/recommend_books', { user_input });
+    const response = await axios.post(`${PYTHON_API}/recommend_books`, { user_input });
     res.status(200).json(response.data);
   } catch (err) {
-    console.error(err.message);
-    if (err.response && err.response.data.error) {
+    console.error("❌ Recommendation Error:", err.message);
+
+    if (err.response && err.response.data?.error) {
       res.status(404).json({ error: err.response.data.error });
     } else {
       res.status(500).json({ error: 'Failed to fetch recommendations' });
