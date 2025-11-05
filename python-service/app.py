@@ -87,7 +87,7 @@ import pickle, gzip, numpy as np, pandas as pd
 import os
 
 app = Flask(__name__)
-CORS(app)  # ✅ Enable CORS for all routes
+CORS(app, resources={r"/*": {"origins": "*"}}) # ✅ Enable CORS for all routes
 
 # Load Data
 popular_df = pickle.load(open('popular.pkl', 'rb'))
