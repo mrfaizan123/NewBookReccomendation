@@ -31,40 +31,34 @@
 
 
 
-
-
-
-
-
-
 const axios = require('axios');
 
-const PYTHON_API = 'https://newbookreccomendation-2.onrender.com';
+// CHANGE THIS:
+const PYTHON_SERVICE_URL = "https://newbookreccomendation-2.onrender.com";
 
 // Fetch top books from Flask
 exports.getTopBooks = async (req, res) => {
   try {
-    const response = await axios.get(`${PYTHON_API}/`);
+    const response = await axios.get(`${PYTHON_SERVICE_URL}/`);
     res.status(200).json(response.data);
   } catch (err) {
-    console.error("❌ Top Books Fetch Error:", err.message);
+    console.error("Top Books Error:", err.message);
     res.status(500).json({ error: 'Failed to fetch top books' });
   }
 };
 
-// Fetch recommendations from Flask
+// Fetch Recommendations
 exports.getRecommendations = async (req, res) => {
   const { user_input } = req.body;
   try {
-    const response = await axios.post(`${PYTHON_API}/recommend_books`, { user_input });
+    const response = await axios.post(`${PYTHON_SERVICE_URL}/recommend_books`, { user_input });
     res.status(200).json(response.data);
   } catch (err) {
-    console.error("❌ Recommendation Error:", err.message);
-
-    if (err.response && err.response.data?.error) {
-      res.status(404).json({ error: err.response.data.error });
-    } else {
-      res.status(500).json({ error: 'Failed to fetch recommendations' });
-    }
+    console.error("Recommendation Error:", err.message);
+    res.status(404).json({ error: 'Book not found or server issue' });
   }
 };
+
+
+
+
