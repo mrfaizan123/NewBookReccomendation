@@ -302,20 +302,24 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getTopBooks()
-            .then(res => {
-                // setBooks(res.data);
-                // setFilteredBooks(res.data);
-                        setBooks(res.data.data);  
-setFilteredBooks(res.data.data);
-
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error('Error loading books:', err);
-                setLoading(false);
-            });
-    }, []);
+    getTopBooks()
+        .then(res => {
+            if (res.data && res.data.length > 0) {
+                setBooks(res.data);
+                setFilteredBooks(res.data);
+            } else {
+                setBooks([]);
+                setFilteredBooks([]);
+            }
+            setLoading(false);
+        })
+        .catch(err => {
+            console.error('Error loading books:', err);
+            setBooks([]);
+            setFilteredBooks([]);
+            setLoading(false);
+        });
+}, []);
 
     // Search functionality
     useEffect(() => {
