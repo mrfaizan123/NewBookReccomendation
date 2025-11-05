@@ -26,16 +26,13 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://newbookreccomendation-2.onrender.com' // deployed Flask backend
+  baseURL: 'https://newbookreccomendation-2.onrender.com'
 });
 
-export const signup = (data) => API.post('/auth/signup', data); // if auth exists
-export const login = (data) => API.post('/auth/login', data);   // if auth exists
+export const getTopBooks = () => API.get('/books/top'); // matches Flask
+export const getRecommendations = (user_input) =>
+  API.post('/recommend_books', { user_input });
 
-// Correct endpoints for deployed Flask backend
-export const getTopBooks = () => API.get('/');  // top books
-export const getRecommendations = (user_input) => 
-    API.post('/recommend_books', { user_input });
 
 export const logout = async () => {
   const response = await fetch('https://newbookreccomendation-2.onrender.com/logout', {
