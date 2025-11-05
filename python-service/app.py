@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import pickle, gzip, numpy as np, pandas as pd
+import os
 
 app = Flask(__name__)
 
@@ -50,7 +51,6 @@ def recommend():
             author = temp_df['Book-Author'].iloc[0]
             img = temp_df['Image-URL-M'].iloc[0]
 
-            # ✅ FIX: Case-insensitive match with trimming
             pop = popular_df[popular_df['Book-Title'].str.lower().str.strip() == title.lower().strip()]
 
             if len(pop) > 0:
@@ -74,6 +74,6 @@ def recommend():
         return jsonify({"error": "Book not found"}), 404
 
 
-
 if __name__ == "__main__":
-    app.run(port=5001, debug=True)
+    port = int(os.environ.get("PORT", 5001))
+    app.run(host="0.0.0.0", port=port)
