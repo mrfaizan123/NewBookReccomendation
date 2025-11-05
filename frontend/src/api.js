@@ -21,21 +21,25 @@
 //   return response.json();
 // };
 
-
-
 import axios from 'axios';
 
+// Use your Render backend URL
 const API = axios.create({
-  baseURL: 'https://newbookreccomendation-2.onrender.com'
+  baseURL: 'https://newbookreccomendation-2.onrender.com'  // backend URL
 });
 
-export const getTopBooks = () => API.get('/books/top'); // matches Flask
-export const getRecommendations = (user_input) =>
+// ✅ Auth APIs
+export const signup = (data) => API.post('/auth/signup', data);
+export const login = (data) => API.post('/auth/login', data);
+
+// ✅ Book APIs
+export const getTopBooks = () => API.get('/');  // Your Flask app '/' route returns top books
+export const getRecommendations = (user_input) => 
   API.post('/recommend_books', { user_input });
 
-
+// ✅ Logout
 export const logout = async () => {
-  const response = await fetch('https://newbookreccomendation-2.onrender.com/logout', {
+  const response = await fetch(`${API.defaults.baseURL}/logout`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
   });
