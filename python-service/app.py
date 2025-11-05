@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 import pickle, gzip, numpy as np, pandas as pd
 import os
+from flask_cors import CORS  # ✅ Add this
 
 app = Flask(__name__)
+CORS(app)  # ✅ Enable CORS for all routes
 
 # Load Data
 popular_df = pickle.load(open('popular.pkl', 'rb'))
