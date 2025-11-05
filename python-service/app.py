@@ -73,26 +73,21 @@
 
 
 
+
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pickle, gzip, numpy as np, pandas as pd
 import os
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})  # Enable CORS
+CORS(app, resources={r"/*": {"origins": "*"}})  # Enable CORS for all routes
 
-# ------------------------
-# In-memory user storage (replace with DB later)
-users = {}
-# ------------------------
-
-# ------------------------
-# Load Books Data
+# ====== Load Book Data ======
 popular_df = pickle.load(open('popular.pkl', 'rb'))
 pt = pickle.load(open('pt.pkl', 'rb'))
 books = pickle.load(gzip.open('book.pkl.gz', 'rb'))
 similarity_scores = pickle.load(open('similarity.pkl', 'rb'))
-# ------------------------
 
 def convert_to_python_types(df):
     result = []
@@ -108,9 +103,12 @@ def convert_to_python_types(df):
         result.append(item)
     return result
 
-# ------------------------
-# Books Routes
-# ------------------------
+# ====== In-Memory User Store (Demo) ======
+users = {}  # replace with database in production
+
+# ====== Routes ======
+
+# Books
 @app.route('/books/top')
 def top_books():
     return jsonify(convert_to_python_types(popular_df))
@@ -145,12 +143,11 @@ def recommend():
             })
 
         return jsonify(recommended_books)
+
     except:
         return jsonify({"error": "Book not found"}), 404
 
-# ------------------------
-# Auth Routes
-# ------------------------
+# Signup
 @app.route('/auth/signup', methods=['POST'])
 def signup():
     data = request.json
@@ -164,6 +161,7 @@ def signup():
     users[email] = {"username": username, "password": password}
     return jsonify({"message": "Signup successful"}), 200
 
+# Login
 @app.route('/auth/login', methods=['POST'])
 def login():
     data = request.json
@@ -176,9 +174,8 @@ def login():
     else:
         return jsonify({"error": "Invalid credentials"}), 401
 
-# ------------------------
-# Run server
-# ------------------------
+# ====== Run Server ======
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
