@@ -159,47 +159,27 @@
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
 
-/* -------------------------------------- */
-/* 📱 RESPONSIVE ADJUSTMENTS */
-/* -------------------------------------- */
-
+/* Fix H1 not fully visible on small screens */
 @media (max-width: 900px) {
+    .recommend-header {
+        padding: 2.5rem 1.5rem 2rem;
+    }
+
     .recommend-header h1 {
-        font-size: 2.5rem;
-    }
-
-    .recommend-form {
-        flex-direction: column;
-        padding: 1.5rem;
-    }
-
-    .recommend-button {
-        width: 100%;
-        font-size: 1rem;
-        padding: 1rem;
+        font-size: 2.4rem;
+        line-height: 1.1;
     }
 }
 
 @media (max-width: 600px) {
+    .recommend-header {
+        padding: 2rem 1rem 1.5rem;
+    }
+
     .recommend-header h1 {
-        font-size: 2rem;
-        line-height: 1.2;
-    }
-
-    .recommend-form {
-        padding: 1.2rem;
-    }
-
-    .recommend-input {
-        font-size: 1rem;
-        padding: 1rem 1.3rem;
-    }
-
-    .recommend-button {
-        width: 100%;
-    }
-
-    .book-grid {
-        grid-template-columns: 1fr !important;
+        font-size: 1.9rem;
+        line-height: 1.1;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 }
